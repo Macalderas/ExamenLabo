@@ -1,4 +1,4 @@
-import { guardarRegistro } from "../../servicios/localStorage.js";
+import { guardarRegistro } from "../../servicios/api.js";
 import {renderizarRegistros} from "../registros/mostrarRegistro.js"
 
 export function formularioComponente() {

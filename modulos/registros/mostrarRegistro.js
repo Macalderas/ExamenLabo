@@ -1,4 +1,5 @@
-import { obtenerRegistros, eliminarRegistro } from "../../servicios/localStorage.js";
+import { obtenerRegistros, eliminarRegistro } from "../../servicios/api.js";
+
 let contenedor;
 
 export function mostrarRegistros() {
@@ -8,13 +9,13 @@ export function mostrarRegistros() {
   return contenedor;
 }
 
-export function renderizarRegistros() {
+export async function renderizarRegistros() {
   if (!contenedor) return;
-  contenedor.innerHTML = ""; // Limpiar anterior
+  contenedor.innerHTML = "";
 
-  const registros = obtenerRegistros();
+  const registros = await obtenerRegistros();
 
-  registros.forEach((reg, index) => {
+  registros.forEach((reg) => {
     const div = document.createElement("div");
     div.className = "registro-item";
 
@@ -24,8 +25,7 @@ export function renderizarRegistros() {
     const btnEliminar = document.createElement("button");
     btnEliminar.textContent = "Eliminar";
     btnEliminar.addEventListener("click", () => {
-      eliminarRegistro(index);
-      renderizarRegistros();
+      eliminarRegistro(reg.id).then(renderizarRegistros);
     });
 
     div.appendChild(texto);
